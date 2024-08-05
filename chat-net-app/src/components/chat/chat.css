@@ -1,7 +1,7 @@
 .chat {
      flex: 2;
-     border-left: 1px solid #5F6368;
-     border-right: 1px solid #5F6368;
+     border-left: 1px solid #0000002e;
+     border-right: 1px solid #0000002e;
 
      display: flex;
 
@@ -16,7 +16,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-bottom: 1px solid black;
+          border-bottom: 1px solid #0000002e;
 
 
           .user {
@@ -46,7 +46,7 @@
                     p {
                          font-size: 14px;
                          font-weight: 300;
-                         color: red;
+                         color: #5F6368;
                     }
                }
 
@@ -81,11 +81,11 @@
                gap: 20px;
 
                &.own {
-                    align-items: flex-end;
+                    align-self: flex-end;
 
                     .textContainer {
                          p {
-                              background-color: skyblue;
+                              background-color: #eb87cc99;
                          border-radius: 10px;
 
                          }
@@ -105,10 +105,17 @@
                     flex-direction: column;
                     gap: 5px;
 
+                    img {
+                         width: 100%;
+                         height: 300px;
+                         border-radius: 10px;
+                         object-fit: cover;
+                    }
+
 
                     p {
                          padding: 20px;
-                         background-color: blue;
+                         background-color: #5c449563;
                          border-radius: 10px;
                     }
 
@@ -128,7 +135,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-top: 1px solid #5F6368; 
+          border-top: 1px solid #0000002e; 
           /* delete border-top */
 
 
@@ -152,10 +159,10 @@
 
           input {
                flex: 1;
-               background-color: #5f63685c;
+               background-color: #5f63683d;
                border: none;
                outline: none;
-               color: #fff;
+               color: #000;
 
                padding: 10px 20px;
                border-radius: 10px;

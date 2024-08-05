@@ -5,6 +5,8 @@ import avatarImg from '../../assets/avatar.png';
 import EmojiPicker from 'emoji-picker-react';
 
 
+
+
 export default function Chat() {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -76,6 +78,7 @@ export default function Chat() {
         </div>
         <div className='message own'>
          <div className="textContainer">
+          <img src='https://images.pexels.com/photos/13599879/pexels-photo-13599879.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt='picture'/>
           <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit, dolore aspernatur facere est dolorem sapiente expedita corporis possimus optio in. Nobis debitis, corporis numquam officiis eveniet impedit libero aut harum.</p>
           <span>1 min ago</span>
          </div>

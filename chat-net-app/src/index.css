@@ -2,10 +2,13 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  /* font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", */
+    /* "Lucida Sans Unicode", Geneva, Verdana, sans-serif; */
 }
 
 body {
   background-color: #D3DBF5;
+  background-color: #1a1130;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -26,6 +26,34 @@ export default function ChatList() {
                <p>Hello!</p>
           </div>
      </div>
+     <div className='item'>
+          <img src={avatarImg} alt="user avatar" />
+          <div className='textContainer'>
+               <span>Jane Doe</span>
+               <p>Hello!</p>
+          </div>
+     </div>
+     <div className='item'>
+          <img src={avatarImg} alt="user avatar" />
+          <div className='textContainer'>
+               <span>Jane Doe</span>
+               <p>Hello!</p>
+          </div>
+     </div>
+     <div className='item'>
+          <img src={avatarImg} alt="user avatar" />
+          <div className='textContainer'>
+               <span>Jane Doe</span>
+               <p>Hello!</p>
+          </div>
+     </div>
+     <div className='item'>
+          <img src={avatarImg} alt="user avatar" />
+          <div className='textContainer'>
+               <span>Jane Doe</span>
+               <p>Hello!</p>
+          </div>
+     </div>
 
      
     </div>
