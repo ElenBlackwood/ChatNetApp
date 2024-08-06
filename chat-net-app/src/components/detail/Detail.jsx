@@ -6,6 +6,7 @@ import avatarImg from '../../assets/avatar.png';
 
 import arrowUp from '../../assets/arrowUp.svg';
 import arrowDown from '../../assets/arrowDown.svg';
+import { auth } from '../../lib/firebase';
 
 
 
@@ -71,6 +72,8 @@ export default function Detail() {
           </div>
         </div>
         <button>Block User</button>
+        <button className='logout' onClick={() => auth.signOut()}>Logout</button>
+
       </div>
     </div>
   )

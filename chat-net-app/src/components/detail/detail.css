@@ -110,6 +110,16 @@
                     background-color: rgb(230, 74, 105);
                }
           }
+
+          .logout {
+               background-color: rgba(90, 74, 230, 0.553);
+
+               &:hover {
+                    background-color: rgba(90, 74, 230, 0.996);
+
+               }
+
+          }
      }
 
 
