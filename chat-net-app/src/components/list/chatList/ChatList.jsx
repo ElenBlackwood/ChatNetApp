@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './chatList.css';
 import avatarImg from '../../../assets/avatar.png';
+import AddUser from './addUser/AddUser';
 
 
 
@@ -54,8 +55,7 @@ export default function ChatList() {
                <p>Hello!</p>
           </div>
      </div>
-
-     
+     {addMode && <AddUser />}
     </div>
   )
 }
