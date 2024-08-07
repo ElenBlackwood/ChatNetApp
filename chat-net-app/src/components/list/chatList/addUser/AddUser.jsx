@@ -4,14 +4,17 @@ import './addUser.css';
 import avatarImg from '../../../../assets/avatar.png';
 
 
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { arrayUnion, collection, doc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from '../../../../lib/firebase';
+import {useUserStore} from "../../../../lib/userStore"
 
 
 
 export default function AddUser() {
 
-     const [user, setUser] = useState(null)
+     const [user, setUser] = useState(null);
+
+     const {currentUser} = useUserStore();
 
 
      const handleSearch = async e => {
@@ -33,7 +36,7 @@ export default function AddUser() {
                     setUser(querySnapShot.docs[0].data());
 
                }else {
-                     setUser(null);
+                    setUser(null);
                     console.log("No user found with that username.");
                }
 
@@ -41,8 +44,49 @@ export default function AddUser() {
           } catch (err) {
                console.log(err)
                
-          }
+          };
 
+     };
+
+     const handleAdd = async () => {
+          
+
+          const chatRef = collection(db, "chats");  
+          const userChatsRef = collection(db, "userchats");
+
+          try {
+               const newChatRef = doc(chatRef);
+
+
+               await setDoc(newChatRef, {
+                    createdAt: serverTimestamp(),
+                    message: [],
+               });
+
+
+               await updateDoc(doc(userChatsRef, user.id), {
+                    chats: arrayUnion({
+                         chatId: newChatRef.id,
+                         lastMessage: "",
+                         receiverId: currentUser.id,
+                         updateAt: Date.now(),
+                    }),
+               });
+
+               await updateDoc(doc(userChatsRef, currentUser.id), {
+                    chats: arrayUnion({
+                         chatId: newChatRef.id,
+                         lastMessage: "",
+                         receiverId: user.id,
+                         updateAt: Date.now(),
+                    }),
+               });
+
+               
+          } catch (err) {
+               console.log(err);
+               
+          }
      }
 
 
@@ -57,7 +101,7 @@ export default function AddUser() {
                <img src={user.avatar || avatarImg} alt="user avatar" />
                <span>{user.username}</span>
           </div>
-          <button>Add user</button>
+          <button onClick={handleAdd}>Add user</button>
 
      </div>}
     </div>

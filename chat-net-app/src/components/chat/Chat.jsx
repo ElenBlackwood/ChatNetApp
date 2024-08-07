@@ -1,27 +1,79 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './chat.css';
 import avatarImg from '../../assets/avatar.png';
-
 import EmojiPicker from 'emoji-picker-react';
+import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { db } from '../../lib/firebase';
+import { useChatStore } from '../../lib/chatStore';
+import { useUserStore } from '../../lib/userStore';
 
 
 
 
 export default function Chat() {
   const [open, setOpen] = useState(false);
+  const [chat, setChat] = useState();
   const [text, setText] = useState("");
-
+  const {chatId, user} = useChatStore();
+  const {currentUser} = useUserStore();
   const endRef = useRef(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({behavior:"smooth"});
 
-  },[])
+  },[]);
 
+  useEffect(() => {
+    const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
+      setChat(res.data());
+    })
+
+    return () => {
+      unSub();
+    }
+
+  }, [chatId]);
 
   const handleEmoji = e => {
     setText((prev)=> prev + e.emoji);
     setOpen(false);
+  };
+
+  const handleSend = async () => {
+    if(text === "") return;
+
+    try {
+      await updateDoc(doc(db, "chats", chatId), {
+        messages: arrayUnion({
+          senderId: currentUser.id,
+          text,
+          createdAt: new Date(),
+        })
+      });
+
+      const userIDs = [currentUser.id, user.id];
+
+      userIDs.forEach(async (id) => {
+        const userChatsRef = doc(db, "userhats", id);
+        const userChatsSnapshot = await getDoc(userChatsRef);
+
+        if(userChatsSnapshot.exists()) {
+          const userChatsData = userChatsSnapshot.data();
+          const chatIndex = userChatsData.chats.findIndex((c) => c.chatId === chatId)
+          userChatsData[chatIndex].lastMessage = text;
+          userChatsData[chatIndex].isSeen = id === currentUser.id ? true : false;
+          userChatsData[chatIndex].updatedAt = Date.now();
+
+
+          await updateDoc(userChatsRef, {
+            chats: userChatsData.chats,
+          }
+          )
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
 
@@ -49,47 +101,19 @@ export default function Chat() {
       {/* CENTER */}
 
       <div className='center'>
-
-        <div className='message'>
-          <img src={avatarImg} alt="user avatar" />
+        {
+          chat?.messages?.map((message) => (
+          
+          <div className='message own' key={message?.createdAt}>
           <div className="textContainer">
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit, dolore aspernatur facere est dolorem sapiente expedita corporis possimus optio in. Nobis debitis, corporis numquam officiis eveniet impedit libero aut harum.</p>
-          <span>1 min ago</span>
-         </div>
+            {message.img && <img src={message.img} alt='picture'/>}
+            <p>{message.text}</p>
+            {/* <span>{message.createdAt}</span> */}
+          </div>
         </div>
-        <div className='message own'>
-         <div className="textContainer">
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit, dolore aspernatur facere est dolorem sapiente expedita corporis possimus optio in. Nobis debitis, corporis numquam officiis eveniet impedit libero aut harum.</p>
-          <span>1 min ago</span>
-         </div>
-        </div>
-        <div className='message'>
-         <img src={avatarImg} alt="user avatar" />
-         <div className="textContainer">
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit, dolore aspernatur facere est dolorem sapiente expedita corporis possimus optio in. Nobis debitis, corporis numquam officiis eveniet impedit libero aut harum.</p>
-          <span>1 min ago</span>
-         </div>
-        </div>
-        <div className='message own'>
-         <div className="textContainer">
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit, dolore aspernatur facere est dolorem sapiente expedita corporis possimus optio in. Nobis debitis, corporis numquam officiis eveniet impedit libero aut harum.</p>
-          <span>1 min ago</span>
-         </div>
-        </div>
-        <div className='message'>
-         <img src={avatarImg} alt="user avatar" />
-         <div className="textContainer">
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit, dolore aspernatur facere est dolorem sapiente expedita corporis possimus optio in. Nobis debitis, corporis numquam officiis eveniet impedit libero aut harum.</p>
-          <span>1 min ago</span>
-         </div>
-        </div>
-        <div className='message own'>
-         <div className="textContainer">
-          <img src='https://images.pexels.com/photos/13599879/pexels-photo-13599879.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt='picture'/>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit, dolore aspernatur facere est dolorem sapiente expedita corporis possimus optio in. Nobis debitis, corporis numquam officiis eveniet impedit libero aut harum.</p>
-          <span>1 min ago</span>
-         </div>
-        </div>
+          ))}
+        
+        
         
         <div ref={endRef}></div>
       
@@ -110,7 +134,7 @@ export default function Chat() {
 
           </div>
         </div>
-        <button className='sendButton'>Send</button>
+        <button className='sendButton'  onClick={handleSend}>Send</button>
       </div>
 
     </div>
