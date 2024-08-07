@@ -5,16 +5,6 @@ ChatNetApp is a modern chat application built using React, Firebase, Zustand, an
 ![Screenshot](src/assets/homescreen.png)
 ![Screenshot](src/assets/chats.png)
 
-## Table of Contents
-
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Features
 
 - User Authentication (Firebase Authentication)
@@ -43,3 +33,31 @@ ChatNetApp is a modern chat application built using React, Firebase, Zustand, an
    ```bash
    git clone https://github.com/ElenBlackwood/ChatNetApp.git
    cd ChatNetApp
+   npm install
+   npm run dev
+
+2. **Firebase**
+   You can create your Firebase account to set up authentication, Firestore, and storage in the future.
+   Copy then  your Firebase config and replace the placeholder values in the project.
+
+3. **Usage**
+
+- Register and Login: Users can register and login using their email and password.
+- Chat: Engage in real-time chat with other users.
+- Emoji Support: Use emojis in your messages.
+- File Uploads: Upload and share files in the chat.
+- Notifications: Receive toast notifications for important events.
+
+##Contributing
+Contributions are welcome! Please create an issue or submit a pull request with your changes.
+
+- Fork the repository
+- Create your feature branch (git checkout -b feature/YourFeature)
+- Commit your changes (git commit -m 'Add some feature')
+- Push to the branch (git push origin feature/YourFeature)
+- Open a pull request
+
+##License
+This project is licensed under the MIT License. See the LICENSE file for details.
+   
+
