@@ -30,9 +30,9 @@ function App() {
     {
       currentUser ? (
         <>
-        <List />
-        {chatId && <Chat />}
-        {chatId && <Detail />}
+          <List />
+          {chatId && <Chat />}
+          {chatId && <Detail />}
         </>
       ) : (<Login />)
     }
