@@ -5,7 +5,7 @@ import AddUser from './addUser/AddUser';
 import { useUserStore } from '../../../lib/userStore';
 import { useChatStore } from '../../../lib/chatStore';
 
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from '../../../lib/firebase';
 
 
@@ -50,11 +50,31 @@ export default function ChatList() {
 
      const handleSelect = async (chat) => {
 
-          changeChat(chat.chatId, chat.user)
+          const userChats = chats.map(item => {
+               const {user, ...rest} = item;
+
+               return rest;
+          });
+
+          const chatIndex = userChats.findIndex((item)=> item.chatId === chat.chatId);
 
 
+          userChats[chatIndex].isSeen = true;
+
+          const userChatsRef = doc(db, "userchats", currentUser.id);
+
+          try {
+               await updateDoc(userChatsRef, {
+                    chats: userChats,
+
+               });
+               changeChat(chat.chatId, chat.user);
+
+               
+          } catch (err) {
+               console.log(err);
+          }
      }
-
 
 
 
@@ -65,20 +85,36 @@ export default function ChatList() {
                <i class="icon-search"></i>
                <input type="text" placeholder='Search' />
           </div>
-          <div className='add' onClick={() => setAddMode(prev => !prev)}>
-          {addMode ? <i className="icon-minus"></i> : <i className="icon-plus"></i>}
-        </div>
+          <div 
+               className='add' 
+               onClick={() => setAddMode(prev => !prev)}>
+               {addMode ? <i className="icon-minus"></i> : <i className="icon-plus"></i>}
+          </div>
      </div>
      {chats.map((chat) => (
-          <div className='item' key={chat.chatId}  onClick={()=> handleSelect(chat)}>
-               <img src={chat.user.avatar || avatarImg} alt="user avatar" />
+          <div 
+               className='item' 
+               key={chat.chatId} 
+               onClick={()=> handleSelect(chat)} 
+               style={{
+                    backgroundColor: chat?.isSeen ? "transparent" : "#bb51fe61"
+     }}>
+               <img src = 
+                    {chat.user.blocked.includes(currentUser.id) 
+                    ? avatarImg 
+                    : chat.user.avatar || avatarImg} 
+                    alt="user avatar" 
+               />
                <div className='textContainer'>
-                    <span>{chat.user.username}</span>
+                    <span>
+                         {chat.user.blocked.includes(currentUser.id) 
+                         ? "User" 
+                         : chat.user.username}
+                    </span>
                     <p>{chat.lastMessage}</p>
                </div>
           </div>
      ))}
-     
      {addMode && <AddUser />} 
     </div>
   )
