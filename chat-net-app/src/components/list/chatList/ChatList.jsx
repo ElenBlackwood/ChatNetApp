@@ -63,7 +63,7 @@ export default function ChatList() {
      <div className='chatList'>
           <div className='search'>
                <div className='searchBar'>
-                    <i class="icon-search"></i>
+                    <i className="icon-search"></i>
                     <input 
                          type="text" 
                          placeholder="Search" 

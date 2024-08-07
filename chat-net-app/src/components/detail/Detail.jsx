@@ -9,7 +9,7 @@ import { useChatStore } from '../../lib/chatStore';
 import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
 
 export default function Detail() {
-  const {checkActionCode, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock} = useChatStore();
+  const {user, isCurrentUserBlocked, isReceiverBlocked, changeBlock} = useChatStore();
   const {currentUser} = useUserStore();
   const handleBlock = async () => {
     if(!user) return;
@@ -56,21 +56,21 @@ export default function Detail() {
                 <img src="https://images.pexels.com/photos/13599879/pexels-photo-13599879.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" />
                 <span>photo_2024_2.png</span>
               </div>
-              <i class="icon-download"></i>
+              <i className="icon-download"></i>
             </div>
             <div className="mediaItem">
               <div className="mediaDetail">
                 <img src="https://images.pexels.com/photos/13599879/pexels-photo-13599879.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" />
                 <span>photo_2024_2.png</span>
               </div>
-              <i class="icon-download"></i>
+              <i className="icon-download"></i>
             </div>
             <div className="mediaItem">
               <div className="mediaDetail">
                 <img src="https://images.pexels.com/photos/13599879/pexels-photo-13599879.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" />
                 <span>photo_2024_2.png</span>
               </div>
-              <i class="icon-download"></i>
+              <i className="icon-download"></i>
             </div>
           </div>
         </div>

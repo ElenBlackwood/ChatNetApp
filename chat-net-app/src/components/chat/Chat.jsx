@@ -112,9 +112,9 @@ export default function Chat() {
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
           </div>
           <div className='icons'>
-            <i class="icon-more"></i>
-            <i class="icon-video"></i>
-            <i class="icon-edit"></i>
+            <i className="icon-more"></i>
+            <i className="icon-video"></i>
+            <i className="icon-edit"></i>
           </div>
         </div>
         <div className='icons'></div>
@@ -147,14 +147,14 @@ export default function Chat() {
       <div className='bottom'>
         <div className='icons'>
           <label htmlFor="file">
-            <i class="icon-attach"></i>
+            <i className="icon-attach"></i>
           </label>
             <input type="file" id="file" style={{
               display: "none"
             }} 
             onChange={handleImg}/>
-          <i class="icon-video"></i>
-          <i class="icon-mic"></i>
+          <i className="icon-video"></i>
+          <i className="icon-mic"></i>
         </div>
         <input 
           type="text" 

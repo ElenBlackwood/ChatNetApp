@@ -13,9 +13,9 @@ export default function UserInfo() {
         <h2>{currentUser.username}</h2>
       </div>
       <div className='icons'>
-        <i class="icon-more"></i>
-        <i class="icon-video"></i>
-        <i class="icon-edit"></i>
+        <i className="icon-more"></i>
+        <i className="icon-video"></i>
+        <i className="icon-edit"></i>
       </div>
     </div>
   )
