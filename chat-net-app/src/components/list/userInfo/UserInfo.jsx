@@ -4,9 +4,7 @@ import avatarImg from '../../../assets/avatar.png';
 import { useUserStore } from '../../../lib/userStore';
 
 export default function UserInfo() {
-
-  const {currentUser} = useUserStore()
-
+  const {currentUser} = useUserStore();
 
   return (
     <div className='userInfo'>
@@ -15,11 +13,9 @@ export default function UserInfo() {
         <h2>{currentUser.username}</h2>
       </div>
       <div className='icons'>
-       <i class="icon-more"></i>
-       <i class="icon-video"></i>
-       <i class="icon-edit"></i>
-
-
+        <i class="icon-more"></i>
+        <i class="icon-video"></i>
+        <i class="icon-edit"></i>
       </div>
     </div>
   )

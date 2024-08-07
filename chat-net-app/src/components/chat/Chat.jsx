@@ -22,8 +22,6 @@ export default function Chat() {
   const {currentUser} = useUserStore();
   const endRef = useRef(null);
 
-
-
   useEffect(() => {
     endRef.current?.scrollIntoView({behavior:"smooth"});
 
@@ -57,15 +55,12 @@ export default function Chat() {
 
   const handleSend = async () => {
     if(text === "") return;
-
     let imgUrl = null;
 
     try {
       if(img.file) {
         imgUrl = await upload (img.file);
       }
-
-
 
       await updateDoc(doc(db, "chats", chatId), {
         messages: arrayUnion({
@@ -77,7 +72,6 @@ export default function Chat() {
       });
 
       const userIDs = [currentUser.id, user.id];
-
       userIDs.forEach(async (id) => {
         const userChatsRef = doc(db, "userchats", id);
         const userChatsSnapshot = await getDoc(userChatsRef);
@@ -89,7 +83,6 @@ export default function Chat() {
           userChatsData.chats[chatIndex].isSeen = id === currentUser.id ? true : false;
           userChatsData.chats[chatIndex].updatedAt = Date.now();
 
-
           await updateDoc(userChatsRef, {
             chats: userChatsData.chats,
           }
@@ -98,22 +91,19 @@ export default function Chat() {
       });
     } catch (err) {
       console.log(err);
-    }
+    };
 
     setImg({
       file: null,
       url: "",
-
     })
 
     setText("");
-  }
-
+  };
 
   return (
     <div className='chat'>
       {/* TOP */}
-
       <div className='top'>
         <div className='user'>
           <img src={user?.avatar || avatarImg} alt="user avatar" />
@@ -125,19 +115,18 @@ export default function Chat() {
             <i class="icon-more"></i>
             <i class="icon-video"></i>
             <i class="icon-edit"></i>
-      </div>
-
+          </div>
         </div>
         <div className='icons'></div>
-
       </div>
       {/* CENTER */}
-
       <div className='center'>
-        {
-          chat?.messages?.map((message) => (
-          
-          <div className={message.senderId === currentUser.id ? "message own" : "message"} key={message?.createdAt}>
+        {chat?.messages?.map((message) => (
+          <div className=
+            {message.senderId === currentUser.id 
+            ? "message own" 
+            : "message"} 
+            key={message?.createdAt}>
           <div className="textContainer">
             {message.img && <img src={message.img} alt='picture'/>}
             <p>{message.text}</p>
@@ -145,8 +134,6 @@ export default function Chat() {
           </div>
         </div>
           ))}
-        
-        
         {img.url && 
           <div className="message own">
             <div className="textContainer">
@@ -155,9 +142,7 @@ export default function Chat() {
           </div>
         }
         <div ref={endRef}></div>
-      
       </div>
-
       {/* BOTTOM */}
       <div className='bottom'>
         <div className='icons'>
@@ -184,10 +169,14 @@ export default function Chat() {
           <i onClick={()=>setOpen(prev=>!prev)} className="icon-emoji"></i>
           <div className='picker'>
             <EmojiPicker open={open} onEmojiClick={handleEmoji} />
-
           </div>
         </div>
-        <button className='sendButton' onClick={handleSend} disabled={isCurrentUserBlocked || isReceiverBlocked}>Send</button>
+        <button 
+          className='sendButton' 
+          onClick={handleSend} 
+          disabled={isCurrentUserBlocked || isReceiverBlocked}>
+            Send
+        </button>
       </div>
     </div>
   )

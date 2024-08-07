@@ -4,7 +4,6 @@
      align-items: center;
      justify-content: space-between;
 
-
      .user {
           display: flex;
           align-items: center;
@@ -22,14 +21,10 @@
           display: flex;
           gap: 20px;
           cursor: pointer;
-
-          /* check in dev tools */
-
+          
           i {
                width: 20px;
                height: 20px;
           }
      }
-
-
 }
